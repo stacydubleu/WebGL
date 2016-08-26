@@ -53,29 +53,39 @@ function init(){
 	//load geometry blender
 	var loader = new THREE.JSONLoader();
 	  loader.load("body.json", function(geometry){
-	 	var material = new THREE.MeshLambertMaterial({color: 0xccffff});
-	 	planebody = new THREE.Mesh(geometry, material);
-	 	scene.add(planebody);
+		 	var material = new THREE.MeshLambertMaterial({color: 0xccffff});
+		 	planebody = new THREE.Mesh(geometry, material);
+		 	scene.add(planebody);
   });
 
 	var loadLeft = new THREE.JSONLoader();
 	  loadLeft.load("wingright.json", function(geometry){
-	 	var material = new THREE.MeshLambertMaterial({color: 0xccffff});
-	 	wingRight = new THREE.Mesh(geometry, material);
-	 	scene.add(wingRight);
+		 	var material = new THREE.MeshLambertMaterial({color: 0xccffff});
+		 	wingRight = new THREE.Mesh(geometry, material);
+		 	scene.add(wingRight);
   });
 
 	var loadLeft = new THREE.JSONLoader();
 	  loadLeft.load("wingleft.json", function(geometry){
-	 	var material = new THREE.MeshLambertMaterial({color: 0xccffff});
-	 	wingLeft = new THREE.Mesh(geometry, material);
-	  wingLeft.position.x=0;
-		wingLeft.position.y=0;
-		wingLeft.position.z=0;
+		 	var material = new THREE.MeshLambertMaterial({color: 0xccffff});
+		 	wingLeft = new THREE.Mesh(geometry, material);
+		  wingLeft.position.x=0;
+			wingLeft.position.y=0;
+			wingLeft.position.z=0;
 	//	wingLeft.position.set( center.0, center.0, center.0 );
-		scene.add(pivot);
-	 	scene.add(wingLeft);
+			scene.add(pivot);
+		 	scene.add(wingLeft);
   });
+
+	var loadTime = new THREE.JSONLoader();
+		loadTime.load("time.json", function(geometry){
+			var material = new THREE.MeshLambertMaterial({color: 0xe90606});
+			timeLogo = new THREE.Mesh(geometry, material);
+			timeLogo.position.x=-15;
+			timeLogo.position.y=-10;
+			timeLogo.position.z=-10;
+			scene.add(timeLogo);
+		})
 
 
 	var loadGear = new THREE.JSONLoader();
@@ -96,6 +106,7 @@ function animate() {
 	requestAnimationFrame(animate);
 	//rotating cube
 	gear.rotation.y -= clock.getDelta();
+	timeLogo.rotation.y -= clock.getDelta();
 	//pivot.rotation.z += 0.01;
 	//wingLeft.rotation.z += 0.01;
 	//wingRight.rotation.x -= clock.getDelta();
