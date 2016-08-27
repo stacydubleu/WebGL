@@ -41,7 +41,7 @@ function init(){
 
 	//set up the scene, background color
 	renderer.setClearColor(0x87CEEB, 1);
-	// create a light, set its position, and add to scene
+	// create lights, set their position, and add them to scene
 	var pointlight = new THREE.PointLight(0xffffff);
 	var ptlight = new THREE.PointLight(0xffffff);
 
@@ -50,7 +50,18 @@ function init(){
 	scene.add(pointlight);
 	scene.add(ptlight);
 
-	//load geometry blender
+	//JSONLoader is a function that takes in a json file
+	//The json file is a list of vertices that three.js will use to recreate the object from the list of points.
+	//The currently loaded object was created in Blender, a free open-source 3D modeling program
+	//A plugin was used to export the 3D models in Blender into a json format. The following links are to download Blender and the three.js exporter for it:
+	//
+	//	https://www.blender.org/
+	//	https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender
+	//
+	//There are many ready made models online, that are free to use.
+	//Download them as .obj file and import them into blender.
+	//Use the three.js exporter plugin to retrieve the json file and import it into your project
+	//The example below exported each part of the airplane seperately, which is a good practice for animating different parts of a model in the future.
 	var loader = new THREE.JSONLoader();
 	  loader.load("body.json", function(geometry){
 		 	var material = new THREE.MeshLambertMaterial({color: 0xccffff});
@@ -102,15 +113,19 @@ function init(){
 }
 
 function animate() {
-	//render the scene and updates the render as needed
+	//Render the scene and updates the render as needed.
+	//Whenever the user clicks the mouse to rotate around the model, or to pan,
+	//then webGL needs to catch that action and rerender the screen to show the result of that action.
+	//This function is responsible for this. Note that requestAnimationFrame calls the the function itself.
 	requestAnimationFrame(animate);
-	//rotating cube
+
+	//Gear Rotation.
 	gear.rotation.y -= clock.getDelta();
-	timeLogo.rotation.y -= clock.getDelta();
 	//pivot.rotation.z += 0.01;
 	//wingLeft.rotation.z += 0.01;
 	//wingRight.rotation.x -= clock.getDelta();
 	//Render the scene
+	//Render the scene along with any camera changes (angle, distance etc...)
 	renderer.render(scene, camera);
 	controls.update();
 }
